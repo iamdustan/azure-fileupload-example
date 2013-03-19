@@ -37,7 +37,6 @@ namespace SampleFileStorage.Controllers
                 {
                     PublicAccess = BlobContainerPublicAccessType.Blob
                 });
-
         }
 
         // GET api/files
@@ -67,7 +66,6 @@ namespace SampleFileStorage.Controllers
         }
 
         // POST api/files
-        // we are using post for both posting new and editing a blob
         public HttpResponseMessage Post([FromBody]FileModel blobInfo)
         {
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobInfo.BlobName);
@@ -76,8 +74,20 @@ namespace SampleFileStorage.Controllers
             {
                 blockBlob.UploadFromStream(fileStream);
             }
-
             return Request.CreateResponse(HttpStatusCode.Created, blobInfo);
+        }
+
+        // PUT api/files
+        // this is actually identical to the POST above
+        public HttpResponseMessage Put([FromBody] FileModel blobInfo)
+        {
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobInfo.BlobName);
+
+            using (var fileStream = System.IO.File.OpenRead(blobInfo.FilePath))
+            {
+                blockBlob.UploadFromStream(fileStream);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, blobInfo);
         }
 
         public HttpResponseMessage Delete(string id)

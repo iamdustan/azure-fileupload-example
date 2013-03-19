@@ -13,7 +13,7 @@ Other Requirements:
 
 What this does:
 - It creates a container called "mykittys" and sets the permissions to public readonly
-- Http GET will send back a list of all the blobs in the container
-- Http GET(blobName) will send back a specific blob
-- Http POST, PUT will insert or update a specific blob ex {"BlobName":"mykitty":"FilePath":"[filepath]"}
-- Http DELETE(blobName) will delete a specific blob
+- GET will send back a list of all the blobs in the container
+- GET(blobName) will send back a specific blob
+- POST, PUT will insert or update a specific blob ex {"BlobName":"mykitty":"FilePath":"[filepath]"}
+- DELETE(blobName) will delete a specific blob
